@@ -1,5 +1,6 @@
 package com.pedro.screenmatch;
 
+import com.pedro.screenmatch.model.DadosEpisodio;
 import com.pedro.screenmatch.model.DadosSerie;
 import com.pedro.screenmatch.service.ConsumoApi;
 import com.pedro.screenmatch.service.ConverteDados;
@@ -17,9 +18,17 @@ public class ScreenmatchApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception{
 		ConsumoApi consumoApi = new ConsumoApi();
-		var json = consumoApi.obterDados("https://www.omdbapi.com/?t=gilmore+girls&apikey=6585022c");
+		var json = "";
+
 		ConverteDados conversor = new ConverteDados();
-		DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
-		System.out.println(dados);
+
+		json = consumoApi.obterDados("https://www.omdbapi.com/?t=gilmore+girls&apikey=6585022c");
+		DadosSerie dadosSeries = conversor.obterDados(json, DadosSerie.class);
+
+		json = consumoApi.obterDados("https://www.omdbapi.com/?t=gilmore+girls&season=1&episode=2&apikey=6585022c");
+		DadosEpisodio dadosEpisodio = conversor.obterDados(json, DadosEpisodio.class);
+
+		System.out.println(dadosSeries);
+		System.out.println(dadosEpisodio);
 	}
 }
