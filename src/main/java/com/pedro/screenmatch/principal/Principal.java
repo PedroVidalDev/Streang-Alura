@@ -7,6 +7,8 @@ import com.pedro.screenmatch.model.Episodio;
 import com.pedro.screenmatch.service.ConsumoApi;
 import com.pedro.screenmatch.service.ConverteDados;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -69,5 +71,20 @@ public class Principal {
                 .collect(Collectors.toList());
 
         episodios.forEach(System.out::println);
+
+        System.out.println("A partir de qual ano voce deseja ver os episodios: ");
+        var ano = sc.nextInt();
+        sc.nextLine();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataBusca = LocalDate.of(ano, 1, 1);
+
+        episodios.stream()
+                .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(dataBusca))
+                .forEach(e -> System.out.println(
+                        "Temporada: " + e.getTemporada() +
+                                " Episodio: " + e.getNumero() +
+                                " Data lancamento: " + e.getDataLancamento().format(formatter)
+                ));
     }
 }

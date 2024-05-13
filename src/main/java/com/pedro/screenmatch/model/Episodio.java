@@ -45,8 +45,8 @@ public class Episodio {
         return avaliacao;
     }
 
-    public double getDataLancamento() {
-        return avaliacao;
+    public LocalDate getDataLancamento() {
+        return dataLancamento;
     }
 
     @Override
