@@ -3,6 +3,7 @@ package com.pedro.screenmatch.principal;
 import com.pedro.screenmatch.model.DadosEpisodio;
 import com.pedro.screenmatch.model.DadosSerie;
 import com.pedro.screenmatch.model.DadosTemporada;
+import com.pedro.screenmatch.model.Episodio;
 import com.pedro.screenmatch.service.ConsumoApi;
 import com.pedro.screenmatch.service.ConverteDados;
 
@@ -61,6 +62,12 @@ public class Principal {
                 .limit(5)
                 .forEach(System.out::println);
 
+        List<Episodio> episodios = temporadas.stream()
+                .flatMap(t -> t.episodios().stream()
+                    .map(d -> new Episodio(t.numero(), d))
+                )
+                .collect(Collectors.toList());
 
+        episodios.forEach(System.out::println);
     }
 }
