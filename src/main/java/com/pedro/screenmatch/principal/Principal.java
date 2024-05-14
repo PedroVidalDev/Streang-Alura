@@ -3,9 +3,9 @@ package com.pedro.screenmatch.principal;
 import com.pedro.screenmatch.model.DadosSerie;
 import com.pedro.screenmatch.model.DadosTemporada;
 import com.pedro.screenmatch.model.Serie;
+import com.pedro.screenmatch.repository.SerieRepository;
 import com.pedro.screenmatch.service.ConsumoApi;
 import com.pedro.screenmatch.service.ConverteDados;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,6 +20,12 @@ public class Principal {
     private ConverteDados conversor = new ConverteDados();
 
     private List<DadosSerie> dadosSeries = new ArrayList<>();
+
+    private SerieRepository repositorio;
+
+    public Principal(SerieRepository repositorio){
+        this.repositorio = repositorio;
+    }
 
     public void exibeMenu() {
         var opcao = -1;
@@ -72,7 +78,7 @@ public class Principal {
 
     private void buscarSerieWeb() {
         DadosSerie dados = getDadosSerie();
-        dadosSeries.add(dados);
+        repositorio.save(new Serie(dados));
     }
 
     private DadosSerie getDadosSerie() {
