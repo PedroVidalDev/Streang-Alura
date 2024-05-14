@@ -2,10 +2,12 @@ package com.pedro.screenmatch.principal;
 
 import com.pedro.screenmatch.model.DadosSerie;
 import com.pedro.screenmatch.model.DadosTemporada;
+import com.pedro.screenmatch.model.Serie;
 import com.pedro.screenmatch.service.ConsumoApi;
 import com.pedro.screenmatch.service.ConverteDados;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -56,7 +58,16 @@ public class Principal {
     }
 
     private void listarSeriesBuscadas() {
-        dadosSeries.forEach(System.out::println);
+        List<Serie> series = new ArrayList<>();
+
+        series = dadosSeries.stream()
+                .map(d -> new Serie(d))
+                .collect(Collectors.toList());
+
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenero));
+
+        series.forEach(System.out::println);
     }
 
     private void buscarSerieWeb() {
