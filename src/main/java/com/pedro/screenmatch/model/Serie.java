@@ -1,12 +1,23 @@
 package com.pedro.screenmatch.model;
 
+import jakarta.persistence.*;
+
 import java.util.OptionalDouble;
 
+@Entity
+@Table(name = "series")
 public class Serie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String titulo;
     private Integer totalTemporadas;
     private Double avaliacao;
+
+    @Enumerated(EnumType.STRING)
     private Categoria genero;
+
     private String atores;
     private String poster;
     private String sinopse;
@@ -19,6 +30,14 @@ public class Serie {
         this.atores = dados.atores();
         this.poster = dados.poster();
         this.sinopse = dados.sinopse();
+    }
+
+    public Serie() {
+
+    }
+
+    public Long getId(){
+        return id;
     }
 
     public String getTitulo() {
