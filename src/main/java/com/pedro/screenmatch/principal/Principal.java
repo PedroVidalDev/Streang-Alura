@@ -9,10 +9,7 @@ import com.pedro.screenmatch.service.ConverteDados;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -86,5 +83,18 @@ public class Principal {
                                 " Episodio: " + e.getNumero() +
                                 " Data lancamento: " + e.getDataLancamento().format(formatter)
                 ));
+
+        System.out.print("Digite o nome de um episodio: ");
+        var trechoTitulo = sc.nextLine();
+        Optional<Episodio> episodioBuscado = episodios.stream()
+                .filter(e -> e.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
+                .findFirst();
+
+        if(episodioBuscado.isPresent()){
+            System.out.println("Episodio encontrado.");
+            System.out.println("Temporada: " + episodioBuscado.get().getTemporada());
+        } else{
+            System.out.println("Episodio nao encontrado.");
+        }
     }
 }
