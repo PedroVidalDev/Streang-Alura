@@ -44,6 +44,10 @@ public class Episodio {
 
     }
 
+    public void setSerie(Serie serie) {
+        this.serie = serie;
+    }
+
     public Long getId() {
         return id;
     }
