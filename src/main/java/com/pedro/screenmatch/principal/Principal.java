@@ -22,6 +22,7 @@ public class Principal {
     private SerieRepository repositorio;
 
     private List<Serie> series = new ArrayList<>();
+    private Optional<Serie> serieBusca;
 
     public Principal(SerieRepository repositorio){
         this.repositorio = repositorio;
@@ -39,6 +40,7 @@ public class Principal {
                 5 - Buscar serie por ator
                 6 - Top 5 Series
                 7 - Buscar serie por categoria
+                8 - Top episodios por serie
                 
                 0 - Sair                                 
                 """;
@@ -69,6 +71,9 @@ public class Principal {
                 case 7:
                     buscarSeriePorCategoria();
                     break;
+                case 8:
+                    topEpisodiosPorSerie();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
@@ -77,6 +82,23 @@ public class Principal {
             }
         }
 
+    }
+
+    private void topEpisodiosPorSerie() {
+        buscarSeriePorTitulo();
+        if(serieBusca.isPresent()){
+            Serie serie = serieBusca.get();
+
+            List<Episodio> topEpisodios = repositorio.topEpisodiosPorSerie(serie);
+
+            System.out.println("Top episodios da serie " + serie.getTitulo() + ": ");
+            topEpisodios.forEach(e -> System.out.println(
+                    "Nome serie: " + e.getSerie().getTitulo() +
+                    "\nTemporada: " + e.getTemporada() +
+                    "\nNumero episodio: " + e.getNumero() +
+                    "\nTitulo: " + e.getTitulo() +
+                    "\n=-=-=-=-=-=-=-=-=-=-=-="));
+        }
     }
 
     private void buscarSeriePorCategoria() {
@@ -115,10 +137,10 @@ public class Principal {
     private void buscarSeriePorTitulo() {
         System.out.println("Digite o nome da série para busca");
         var nomeSerie = sc.nextLine();
-        Optional<Serie> serieBuscada = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
+        serieBusca = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
 
-        if(serieBuscada.isPresent()){
-            System.out.print("Dados da serieL: " + serieBuscada.get());
+        if(serieBusca.isPresent()){
+            System.out.print("Dados da serieL: " + serieBusca.get());
         }
 
         else{
