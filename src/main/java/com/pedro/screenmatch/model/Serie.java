@@ -2,6 +2,8 @@ package com.pedro.screenmatch.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalDouble;
 
 @Entity
@@ -21,6 +23,9 @@ public class Serie {
     private String atores;
     private String poster;
     private String sinopse;
+
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
+    private List<Episodio> episodios = new ArrayList<>();
 
     public Serie(DadosSerie dados) {
         this.titulo = dados.titulo();
@@ -66,6 +71,14 @@ public class Serie {
 
     public String getSinopse() {
         return sinopse;
+    }
+
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
+    public void setEpisodios(List<Episodio> episodios) {
+        this.episodios = episodios;
     }
 
     @Override

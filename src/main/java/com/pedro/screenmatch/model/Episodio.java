@@ -1,10 +1,21 @@
 package com.pedro.screenmatch.model;
 
+import jakarta.persistence.*;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+@Entity
+@Table(name = "episodios")
 public class Episodio {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    private Serie serie;
+
     private Integer temporada;
     private String titulo;
     private Integer numero;
@@ -27,6 +38,18 @@ public class Episodio {
         } catch(DateTimeParseException ex){
             this.dataLancamento = null;
         }
+    }
+
+    public Episodio() {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Serie getSerie() {
+        return serie;
     }
 
     public Integer getTemporada() {
