@@ -1,9 +1,6 @@
 package com.pedro.screenmatch.principal;
 
-import com.pedro.screenmatch.model.DadosSerie;
-import com.pedro.screenmatch.model.DadosTemporada;
-import com.pedro.screenmatch.model.Episodio;
-import com.pedro.screenmatch.model.Serie;
+import com.pedro.screenmatch.model.*;
 import com.pedro.screenmatch.repository.SerieRepository;
 import com.pedro.screenmatch.service.ConsumoApi;
 import com.pedro.screenmatch.service.ConverteDados;
@@ -41,6 +38,7 @@ public class Principal {
                 4 - Buscar serie por titulo
                 5 - Buscar serie por ator
                 6 - Top 5 Series
+                7 - Buscar serie por categoria
                 
                 0 - Sair                                 
                 """;
@@ -68,6 +66,9 @@ public class Principal {
                 case 6:
                     buscarTopCincoSeries();
                     break;
+                case 7:
+                    buscarSeriePorCategoria();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
@@ -76,6 +77,17 @@ public class Principal {
             }
         }
 
+    }
+
+    private void buscarSeriePorCategoria() {
+        System.out.println("Digite o nome da categoria para busca: ");
+        var nomeCategoria = sc.nextLine();
+
+        Categoria categoria = Categoria.fromPortugues(nomeCategoria);
+
+        List<Serie> seriesPorCategoria = repositorio.findByGenero(categoria);
+        System.out.println("Series da categoria " + nomeCategoria + ": ");
+        seriesPorCategoria.forEach(System.out::println);
     }
 
     private void buscarTopCincoSeries() {
