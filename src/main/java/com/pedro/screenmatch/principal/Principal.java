@@ -56,6 +56,9 @@ public class Principal {
                 case 3:
                     listarSeriesBuscadas();
                     break;
+                case 4:
+                    buscarSeriePorTitulo();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
@@ -64,6 +67,20 @@ public class Principal {
             }
         }
 
+    }
+
+    private void buscarSeriePorTitulo() {
+        System.out.println("Digite o nome da série para busca");
+        var nomeSerie = sc.nextLine();
+        Optional<Serie> serieBuscada = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
+
+        if(serieBuscada.isPresent()){
+            System.out.print("Dados da serieL: " + serieBuscada.get());
+        }
+
+        else{
+            System.out.println("Serie nao encontrada.");
+        }
     }
 
     private void listarSeriesBuscadas() {
@@ -93,9 +110,7 @@ public class Principal {
         listarSeriesBuscadas();
         var nomeSerie = sc.nextLine();
 
-        Optional<Serie> serie = series.stream()
-                .filter(s -> s.getTitulo().toLowerCase().contains(nomeSerie.toLowerCase()))
-                .findFirst();
+        Optional<Serie> serie = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
 
         if(serie.isPresent()){
             var serieEncontrada = serie.get();
