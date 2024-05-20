@@ -1,6 +1,8 @@
 package com.pedro.screenmatch.service;
 
+import com.pedro.screenmatch.dto.EpisodioDTO;
 import com.pedro.screenmatch.dto.SerieDTO;
+import com.pedro.screenmatch.model.Episodio;
 import com.pedro.screenmatch.model.Serie;
 import com.pedro.screenmatch.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,20 @@ public class SerieService {
 
         if(serie.isPresent()){
             return new SerieDTO(serie.get());
+        }
+
+        return null;
+    }
+
+    public List<EpisodioDTO> obterTodasAsTemporadas(Long id) {
+        Optional<Serie> serie = repository.findById(id);
+
+        if(serie.isPresent()){
+            Serie serieEncontrada = serie.get();
+
+            return serieEncontrada.getEpisodios().stream()
+                    .map(e -> new EpisodioDTO(e))
+                    .collect(Collectors.toList());
         }
 
         return null;

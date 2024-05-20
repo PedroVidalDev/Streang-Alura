@@ -1,5 +1,6 @@
 package com.pedro.screenmatch.controller;
 
+import com.pedro.screenmatch.dto.EpisodioDTO;
 import com.pedro.screenmatch.dto.SerieDTO;
 import com.pedro.screenmatch.model.Serie;
 import com.pedro.screenmatch.repository.SerieRepository;
@@ -35,6 +36,11 @@ public class SerieController {
     @GetMapping("/{id}")
     public SerieDTO obterPorId(@PathVariable Long id){
         return service.obterPorId(id);
+    }
+
+    @GetMapping("{id}/temporadas/todas")
+    public List<EpisodioDTO> obterTodasAsTemporadas(@PathVariable Long id){
+        return service.obterTodasAsTemporadas(id);
     }
 
     @GetMapping("/lancamentos")
