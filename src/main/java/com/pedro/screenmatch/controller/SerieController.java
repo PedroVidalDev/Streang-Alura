@@ -23,6 +23,6 @@ public class SerieController {
 
     @GetMapping
     public List<SerieDTO> obterSeries(){
-        service.obterTodasAsSeries();
+        return service.obterTodasAsSeries();
     }
 }
