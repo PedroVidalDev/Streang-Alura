@@ -52,4 +52,9 @@ public class SerieController {
     public List<SerieDTO> obterLancamentos(){
         return service.obterLancamentos();
     }
+
+    @GetMapping("/categoria/{nomeGenero}")
+    public List<SerieDTO> obterPorCategoria(@PathVariable String nomeGenero){
+        return service.obterPorGenero(nomeGenero);
+    }
 }

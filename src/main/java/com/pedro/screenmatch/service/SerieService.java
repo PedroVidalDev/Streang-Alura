@@ -2,6 +2,7 @@ package com.pedro.screenmatch.service;
 
 import com.pedro.screenmatch.dto.EpisodioDTO;
 import com.pedro.screenmatch.dto.SerieDTO;
+import com.pedro.screenmatch.model.Categoria;
 import com.pedro.screenmatch.model.Episodio;
 import com.pedro.screenmatch.model.Serie;
 import com.pedro.screenmatch.repository.SerieRepository;
@@ -59,12 +60,16 @@ public class SerieService {
                 .collect(Collectors.toList());
     }
 
+    public List<SerieDTO> obterPorGenero(String nomeGenero) {
+        Categoria categoria = Categoria.fromPortugues(nomeGenero);
+
+        return converteDados(repository.findByGenero(categoria));
+    }
+
     public List<SerieDTO> converteDados(List<Serie> dados){
         return dados
                 .stream()
                 .map(s -> new SerieDTO(s))
                 .collect(Collectors.toList());
     }
-
-
 }
